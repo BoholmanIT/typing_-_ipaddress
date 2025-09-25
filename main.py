@@ -17,20 +17,18 @@ IP-адреса и подсети — строки.
 
 def group_ips_by_subnet(ips: typing.List[str], networks: typing.List[str]) -> typing.Dict[str, typing.List[str]]:
     ratio: typing.Dict[str, typing.List[str]] = {}
-    ip_in_network: typing.List[str] = []
+    #ip_in_network: typing.List[str] = []
     for network in networks:
-        ip_in_network: typing.List[str] = []
+        ratio[network] = []
         for ip in ips:
             try:
-                if ipaddress.ip_address(ip) == ipaddress.ip_network(network):
-                    ip_in_network.append(ip)
+                if ipaddress.ip_address(ip) in ipaddress.ip_network(network):
+                    ratio[network].append(ip)
             
             except Exception as e:
                 print(e)
             finally:
                 pass
-        ratio[network] = ip_in_network.copy()
-    
     return ratio.copy()
 
 
